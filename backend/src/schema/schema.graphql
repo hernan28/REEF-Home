@@ -1,0 +1,141 @@
+type User {
+  id: ID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  role: Role!
+  phone: String
+  address: String
+  orders: [Order!]
+  createdAt: String!
+  updatedAt: String!
+}
+
+type Product {
+  id: ID!
+  name: String!
+  description: String!
+  price: Float!
+  stock: Int!
+  imageUrl: String!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type OrderItem {
+  id: ID!
+  product: Product!
+  quantity: Int!
+  price: Float!
+}
+
+type Order {
+  id: ID!
+  user: User!
+  status: OrderStatus!
+  total: Float!
+  shippingAddress: String!
+  items: [OrderItem!]!
+  createdAt: String!
+  updatedAt: String!
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+  phone: String
+  address: String
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  phone: String
+  address: String
+}
+
+input CreateProductInput {
+  name: String!
+  description: String!
+  price: Float!
+  stock: Int!
+  imageUrl: String!
+}
+
+input UpdateProductInput {
+  name: String
+  description: String
+  price: Float
+  stock: Int
+  imageUrl: String
+}
+
+input OrderItemInput {
+  productId: ID!
+  quantity: Int!
+}
+
+input CreateOrderInput {
+  items: [OrderItemInput!]!
+  shippingAddress: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+type Query {
+  # User queries
+  me: User
+  users: [User!]!
+  user(id: ID!): User
+
+  # Product queries
+  products: [Product!]!
+  product(id: ID!): Product
+
+  # Order queries
+  orders: [Order!]!
+  order(id: ID!): Order
+  myOrders: [Order!]!
+}
+
+type Mutation {
+  # Auth mutations
+  login(input: LoginInput!): AuthPayload!
+  signup(input: CreateUserInput!): AuthPayload!
+
+  # User mutations
+  updateUser(id: ID!, input: UpdateUserInput!): User!
+  deleteUser(id: ID!): User!
+
+  # Product mutations
+  createProduct(input: CreateProductInput!): Product!
+  updateProduct(id: ID!, input: UpdateProductInput!): Product!
+  deleteProduct(id: ID!): Product!
+
+  # Order mutations
+  createOrder(input: CreateOrderInput!): Order!
+  updateOrderStatus(id: ID!, status: OrderStatus!): Order!
+} 
