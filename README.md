@@ -18,7 +18,7 @@ cd <project-directory>
 ### Build and Start Containers
 ```bash
 # Build and start all services in detached mode
-docker-compose up -d
+docker-compose up --build
 ```
 
 ### Stop Containers
@@ -38,3 +38,14 @@ docker-compose up -d --build
 ```bash
 docker-compose exec app sh
 ```
+
+## Access app
+Use any of the following users in order to access web app:
+
+### Admin user
+Email: admin@example.com
+Password: password123
+
+### Customer user
+Email: customer@example.com
+Password: password123

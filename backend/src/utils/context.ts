@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { ExpressContext } from 'apollo-server-express';
 import { getToken, getUser, AuthUser } from '../middleware/auth';
@@ -11,7 +12,7 @@ export interface Context {
 }
 
 export async function createContext({ req }: ExpressContext): Promise<Context> {
-  const token = getToken(req);
+  const token = getToken(req as Request);
   const user = token ? await getUser(token) : undefined;
 
   return {
